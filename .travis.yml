@@ -1,3 +1,87 @@
 language: shell
+os: linux
+dist: xenial
+
 script:
-  - bash -c 'shopt -s globstar nullglob; shellcheck **/*.{sh,ksh,bash}'
+  # nullglob: If set, Bash allows filename patterns which match no files to expand to a null string, rather than themselves.
+  # globstar: If set, the pattern ‘**’ used in a filename expansion context will match all files and 
+  #           zero or more directories and subdirectories. If the pattern is followed by a ‘/’, only directories and subdirectories match.
+  # https://www.shellcheck.net/ to lint *sh scripts. `-x` allows Shellcheck to follow sourced files
+  - bash -c 'shopt -s globstar nullglob; shellcheck -x **/*.{sh,ksh,bash}'
+
+# 1. BDD unit testing framework
+# 2. Travis CI set up with notification email and merging into GitHub repo
+# 3. Code coverage stats via CodeCov
+
+# bach.sh
+# shellspec
+# shunit2
+# bats
+# 
+
+
+
+###
+# https://github.com/codecov/example-bash
+# sudo: required # deprecated key: "sudo" (The key `sudo` has no effect anymore.)
+
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - livdw-dev
+      - cmake
+###
+
+jobs:
+  include:
+    - stage: "Test" # Can omit this line as it is "Test" by default with the first letter capitalised
+      script: ./tests.sh
+
+deploy:
+  provider: pages # Push to GitHub
+  keep_history: true
+  # skip_cleanup: true # deprecated key: "skip_cleanup" (not supported in dpl v2, use cleanup)
+  # 'false' makes Travis CI delete all the files created during the build,
+  #   which will probably delete what I am going to upload!
+  github_token: $GITHUB_TOKEN
+  # Go to Settings | Developer Settings | Personal Access Tokens on GitHub. Copy that and plug that as 'GITHUB_TOKEN' in 
+  #  Settings | Environment Variables on Travis-ci.com
+  on:
+    branch: master
+  # OR target_branch: master???????
+
+notifications:
+  # By default, a build email is sent to the committer and the author, but
+  #  only if they have access to the repository the commit was pushed to
+  email:
+    recipients:
+      - $PRIMARY_EMAIL_ADDRESS
+      - mail@gmail.com
+    on_success: always # 'change' by default when notification gets set when the build status changes
+    on_failure: always # 'always' by default
+
+###
+# https://github.com/codecov/example-bash
+# CI providers like Travis CI run tests, generate coverage and upload the coverage to Codecov for every commit.
+# Need to create a code coverage report (.xml) in bash.  Codecov ingests reports.
+after_success:
+  wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+  tar xzf master.tar.gz &&
+  cd kcov-master &&
+  mkdir build &&
+  cd build &&
+  cmake .. &&
+  make &&
+  sudo make install &&
+  cd ../.. &&
+  rm -rf kcov-master &&
+  mkdir -p coverage &&
+  kcov coverage script.sh &&
+  bash <(curl -s https://codecov.io/bash) # -cF bash
+###
+
+  # # Codecov does not run tests
+  # - coverage run main.py
+  # - coverage report
