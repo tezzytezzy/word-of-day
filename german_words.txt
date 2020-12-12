@@ -1,14 +1,15 @@
+1
 Ufer
-Küste
+KÃ¼ste
 Kellnerin
 Bestellung
-Gemütlichkeit
+GemÃ¼tlichkeit
 haltmachen
 verwundert
 ohnehin
-begrüßen
+begrÃ¼ÃŸen
 geringste
-Überfüllt
+ÃœberfÃ¼llt
 vertragen
 klingelt
 Auflege
@@ -26,17 +27,17 @@ wenden
 unbefriedigt
 Eigenschaft
 Gemeinheit
-Übrigens
+Ãœbrigens
 zuletzt
-Würde
+WÃ¼rde
 unantastabar
 Bewusstsein
 im+Ausverkauf
 Unterbrechung
 Qual
-berühmt
-unzählig
-Schnäppchen
+berÃ¼hmt
+unzÃ¤hlig
+SchnÃ¤ppchen
 Ansammlung
 schaden
 anscheinend
@@ -44,42 +45,42 @@ ausreichend
 zukommen
 Schaufenster
 Kunde
-tatsächlich
+tatsÃ¤chlich
 zugegeben
 revanchieren
 eintreffen
 Schwung
-glücklicherweise
-einigermaßen
+glÃ¼cklicherweise
+einigermaÃŸen
 wie+gesagt
 Stufe
 Platzanweiser
-Nachzügler
-mitfühlend
+NachzÃ¼gler
+mitfÃ¼hlend
 Loge
-Ärmel
+Ã„rmel
 Gang
 versehen
-aufdrängen
+aufdrÃ¤ngen
 verkneifen
 Sessel
-überwältigend
+Ã¼berwÃ¤ltigend
 strahlend
-zunächst
-gestört
+zunÃ¤chst
+gestÃ¶rt
 dumpfe
 schleppen
-vereinbaren
+vereinbaren
 Helferin
-Flussabwärts
+FlussabwÃ¤rts
 Weile
 Schlucht
 Hang
-Märchenbuch
+MÃ¤rchenbuch
 beeindruckt
 beziehen
 Gebirge
-berühmt
+berÃ¼hmt
 Steil
 Fels
 Stile
@@ -88,29 +89,29 @@ ertrinken
 gucken
 anlegen
 Verbeugung
-Zuhörer
+ZuhÃ¶rer
 Bankett
 bestehen
 vergeben
 nutslos
 Zweifellos
-anhören
-bewirten
+anhÃ¶ren
+bewirten
 Unsinn
 atemberaubend
 erkennen
 bescheiden
 Erker
 erscheinen
-fürchterlich
+fÃ¼rchterlich
 ziehen+in+Betracht
-sagenhaft
-ausgerechnet
+sagenhaft
+ausgerechnet
 Abstecher
-überzeugen
+Ã¼berzeugen
 nicken
 zustimmen
-Einwände
+EinwÃ¤nde
 Offensichtlich
 auffallen
 Vorurteile
@@ -118,11 +119,11 @@ irgendwelche
 erledigen
 vierradantrieb
 wesentlich
-ausrüsten
+ausrÃ¼sten
 manche
-Geländewagen
+GelÃ¤ndewagen
 Leihwagen
-Straßenverhältnisse
+StraÃŸenverhÃ¤ltnisse
 Winterreifen
 Reifenprofil
 Bedingungen
@@ -131,29 +132,29 @@ Zustand
 Kupplung
 gelassen
 in+den+Griff+bekommen
-dann+kann+nichts+Schief+gehen
+dann+kann+nichts+Schief+gehen
 einbegriffen
 Auspuff
 enttauschen
 verbeulen
-fällig
+fÃ¤llig
 hervorrage
 Getriebe
-liegen+in+den+Zügen
+liegen+in+den+ZÃ¼gen
 Spuren+hinterlassen
 schmal
 zunehmend
 begegnen
-näherkommen
+nÃ¤herkommen
 Hupe
 nebeneinander
 entgegenkommen
 Seitenfenster
 Ausweichstelle
-rückwärts
+rÃ¼ckwÃ¤rts
 atemberaub
 bringen+auf+eine+Idee
-mit+den+Wölfen+heulen
+mit+den+WÃ¶lfen+heulen
 prasseln
 Kamin
 umgegen
@@ -170,9 +171,9 @@ Ursache
 froh
 besorgniserregen
 mitteilen
-Einschreibebrief
+Einschreibebrief
 vermieden
-Zollerklärung
+ZollerklÃ¤rung
 Lehne
 anschrauben
 Gegenteil
@@ -185,25 +186,25 @@ angesammeln
 bemerken
 Scherz
 winzig
-an+die+große+Glocke+hangen
+an+die+groÃŸe+Glocke+hangen
 hervorragend
 beeilen
 annehmen
 keinesfalls
 ungeachtet+der+Tatsache
-Erkältung
+ErkÃ¤ltung
 entstehen
 Schwankung
 vermute
-Ständig
+StÃ¤ndig
 Umschwung
 das+bringt+mich+auf+die+Palme
 beklagen
 Sonnenuntergang
-wieder+zu+kräften+kommen
+wieder+zu+krÃ¤ften+kommen
 verpassen
 erstrahlen
 Segen
 sich+nicht+Scheren+um
-wohlwollend
-vermögenberater
+wohlwollend
+vermÃ¶genberater
