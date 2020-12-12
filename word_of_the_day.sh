@@ -188,7 +188,7 @@ else
   # & = Fork(), creating a child process and gracefully exit this .sh
   # The following does NOT work: $(which $browser) "https://dictionary.cambridge.org/dictionary/english/$word" &
   #  $(which $browser) gets first executed and this script exits to Terminal. THEN, the whole line gets executed and hangs
-  browser_dir_and_exec=$(which "${browser}")
+  browser_dir_and_exec=$(command -v "${browser}")
   
   if [[ -z "${use_german}" ]]; then
     echo "$browser_dir_and_exec" "https://dictionary.cambridge.org/dictionary/english/${word}" &
