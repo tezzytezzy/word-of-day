@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-filename=./word_of_the_day_english.sh
+filename=./word_of_the_day.sh
 
 # . ${filename} is equivalent
 # SC1090: ShellCheck can't follow non-constant source. Use a directive to specify location.
