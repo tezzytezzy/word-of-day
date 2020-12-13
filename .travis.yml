@@ -30,38 +30,38 @@ addons:
       - libdw-dev
       - cmake
 
-jobs:
-  # Can omit the below line as it is named "Test" by default with the first letter capitalised
-  stage: Test
-  name: "Unit testing"
+# jobs:
+#   # Can omit the below line as it is named "Test" by default with the first letter capitalised
+#   stage: Test
+#   name: "Unit testing"
 
-  ###
-  # Permission error on script
-  # Travis would spit out the below three lines.
-  # $ ./tests.sh
-  # /home/travis/.travis/functions: line 109: ./tests.sh: Permission denied
-  # The command "./tests.sh" exited with 126.
-  # <FIX>
-  # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
-  # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
-  # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
-  # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
-  # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
-  # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
-  # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
-  # (base) to@mx:~/gits/word-of-day$ git update-index --chmod=+x tests.sh
-  # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
-  # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
-  # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
-  # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
-  # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
-  # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
-  # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
-  # (base) to@mx:~/gits/word-of-day$ git commit -m "permission access for test.sh"
-  # [main 667d69c] permission access for test.sh
-  #  1 file changed, 0 insertions(+), 0 deletions(-)
-  #  mode change 100644 => 100755 tests.sh
-  script: chmod +x ./tests.sh
+#   ###
+#   # Permission error on script
+#   # Travis would spit out the below three lines.
+#   # $ ./tests.sh
+#   # /home/travis/.travis/functions: line 109: ./tests.sh: Permission denied
+#   # The command "./tests.sh" exited with 126.
+#   # <FIX>
+#   # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
+#   # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
+#   # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
+#   # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
+#   # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
+#   # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
+#   # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
+#   # (base) to@mx:~/gits/word-of-day$ git update-index --chmod=+x tests.sh
+#   # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
+#   # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
+#   # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
+#   # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
+#   # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
+#   # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
+#   # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
+#   # (base) to@mx:~/gits/word-of-day$ git commit -m "permission access for test.sh"
+#   # [main 667d69c] permission access for test.sh
+#   #  1 file changed, 0 insertions(+), 0 deletions(-)
+#   #  mode change 100644 => 100755 tests.sh
+#   script: chmod +x ./tests.sh
 
 deploy:
   provider: pages # Push to GitHub
@@ -103,7 +103,7 @@ after_success:
   cd ../.. &&
   rm -rf kcov-master &&
   mkdir -p coverage &&
-  kcov coverage script.sh &&
+  kcov coverage ./tests.sh &&
   bash <(curl -s https://codecov.io/bash) # -cF bash
 
   # - coverage run main.py
