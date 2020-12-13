@@ -1,0 +1,110 @@
+language: shell
+os: linux
+dist: xenial
+
+script:
+  # nullglob: If set, Bash allows filename patterns which match no files to expand to a null string, rather than themselves.
+  # globstar: If set, the pattern ‘**’ used in a filename expansion context will match all files and 
+  #           zero or more directories and subdirectories. If the pattern is followed by a ‘/’, only directories and subdirectories match.
+  # https://www.shellcheck.net/ to lint *sh scripts. `-x` allows Shellcheck to follow sourced files
+  - bash -c 'shopt -s globstar nullglob; shellcheck -x **/*.{sh,ksh,bash}'
+
+# bach.sh
+# shellspec
+# shunit2
+# bats
+# 
+
+
+
+### https://github.com/codecov/example-bash
+
+# Deprecated key: "sudo" (The key `sudo` has no effect anymore.)
+# sudo: required
+
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - cmake
+
+jobs:
+  # Can omit the below line as it is named "Test" by default with the first letter capitalised
+  stage: Test
+  name: "Unit testing"
+
+  ###
+  # Permission error on script
+  # Travis would spit out the below three lines.
+  # $ ./tests.sh
+  # /home/travis/.travis/functions: line 109: ./tests.sh: Permission denied
+  # The command "./tests.sh" exited with 126.
+  # <FIX>
+  # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
+  # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
+  # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
+  # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
+  # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
+  # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
+  # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
+  # (base) to@mx:~/gits/word-of-day$ git update-index --chmod=+x tests.sh
+  # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
+  # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
+  # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
+  # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
+  # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
+  # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
+  # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
+  # (base) to@mx:~/gits/word-of-day$ git commit -m "permission access for test.sh"
+  # [main 667d69c] permission access for test.sh
+  #  1 file changed, 0 insertions(+), 0 deletions(-)
+  #  mode change 100644 => 100755 tests.sh
+  script: chmod +x ./tests.sh
+
+deploy:
+  provider: pages # Push to GitHub
+  keep_history: true
+  
+  # Deprecated key: "skip_cleanup" (not supported in dpl v2, use cleanup)
+  # skip_cleanup: true 
+  
+  # 'false' makes Travis CI delete all the files created during the build,
+  #   which will probably delete what I am going to upload!
+  github_token: $GITHUB_TOKEN
+  # Go to Settings | Developer Settings | Personal Access Tokens on GitHub. Copy that and plug that as 'GITHUB_TOKEN' in 
+  #  Settings | Environment Variables on Travis-ci.com
+  on:
+    branch: main
+  # Or,  target_branch: master?
+
+notifications:
+  # By default, a build email is sent to the committer and the author, but
+  #  only if they have access to the repository the commit was pushed to
+  email:
+    recipients:
+      - $PRIMARY_EMAIL_ADDRESS
+      - mail@gmail.com
+    on_success: always # 'change' by default when notification gets set when the build status changes
+    on_failure: always # 'always' by default
+
+# CI providers like Travis CI run tests, generate coverage and upload the coverage to Codecov for every commit.
+# Need to create a code coverage report (.xml) in bash.  Codecov ingests reports, does not run tests.
+after_success:
+  wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+  tar xzf master.tar.gz &&
+  cd kcov-master &&
+  mkdir build &&
+  cd build &&
+  cmake .. &&
+  make &&
+  sudo make install &&
+  cd ../.. &&
+  rm -rf kcov-master &&
+  mkdir -p coverage &&
+  kcov coverage script.sh &&
+  bash <(curl -s https://codecov.io/bash) # -cF bash
+
+  # - coverage run main.py
+  # - coverage report
