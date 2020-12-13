@@ -9,10 +9,6 @@ script:
   # https://www.shellcheck.net/ to lint *sh scripts. `-x` allows Shellcheck to follow sourced files
   - bash -c 'shopt -s globstar nullglob; shellcheck -x **/*.{sh,ksh,bash}'
 
-# 1. BDD unit testing framework
-# 2. Travis CI set up with notification email and merging into GitHub repo
-# 3. Code coverage stats via CodeCov
-
 # bach.sh
 # shellspec
 # shunit2
@@ -21,36 +17,40 @@ script:
 
 
 
-###
-# https://github.com/codecov/example-bash
-# sudo: required # deprecated key: "sudo" (The key `sudo` has no effect anymore.)
+### https://github.com/codecov/example-bash
+
+# Deprecated key: "sudo" (The key `sudo` has no effect anymore.)
+# sudo: required
 
 addons:
   apt:
     packages:
       - libcurl4-openssl-dev
       - libelf-dev
-      - livdw-dev
+      - libdw-dev
       - cmake
-###
 
 jobs:
-  include:
-    - stage: "Test" # Can omit this line as it is "Test" by default with the first letter capitalised
-      script: ./tests.sh
+  # Can omit the below line as it is named "Test" by default with the first letter capitalised
+  stage: Test
+  name: "Unit testing"
+  script: ./tests.sh
 
 deploy:
   provider: pages # Push to GitHub
   keep_history: true
-  # skip_cleanup: true # deprecated key: "skip_cleanup" (not supported in dpl v2, use cleanup)
+  
+  # Deprecated key: "skip_cleanup" (not supported in dpl v2, use cleanup)
+  # skip_cleanup: true 
+  
   # 'false' makes Travis CI delete all the files created during the build,
   #   which will probably delete what I am going to upload!
   github_token: $GITHUB_TOKEN
   # Go to Settings | Developer Settings | Personal Access Tokens on GitHub. Copy that and plug that as 'GITHUB_TOKEN' in 
   #  Settings | Environment Variables on Travis-ci.com
   on:
-    branch: master
-  # OR target_branch: master???????
+    branch: main
+  # Or,  target_branch: master?
 
 notifications:
   # By default, a build email is sent to the committer and the author, but
@@ -62,10 +62,8 @@ notifications:
     on_success: always # 'change' by default when notification gets set when the build status changes
     on_failure: always # 'always' by default
 
-###
-# https://github.com/codecov/example-bash
 # CI providers like Travis CI run tests, generate coverage and upload the coverage to Codecov for every commit.
-# Need to create a code coverage report (.xml) in bash.  Codecov ingests reports.
+# Need to create a code coverage report (.xml) in bash.  Codecov ingests reports, does not run tests.
 after_success:
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
   tar xzf master.tar.gz &&
@@ -80,8 +78,6 @@ after_success:
   mkdir -p coverage &&
   kcov coverage script.sh &&
   bash <(curl -s https://codecov.io/bash) # -cF bash
-###
 
-  # # Codecov does not run tests
   # - coverage run main.py
   # - coverage report
