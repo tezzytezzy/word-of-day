@@ -174,9 +174,11 @@ decode_german_letter () {
     #  Not sure why... Bash substring substituion above is not POSIX compliant
     #  See https://tldp.org/LDP/abs/html/string-manipulation.html
 
-    # `${octal:1}` drops the first character "\": "\334" -> "334". The left-most character being position 0
+    # `\${octal}` escapes the whole `${octal}` -> NO substitution!
+    #  E.g., sed 's|${octal}|%F6|g'
+    # `\\${octal}` tranforms to e.g., sed 's|\\326|%D6|g', escaping the second '\' -> sed 's|\326|%D6|g' 
     # shellcheck disable=SC2001
-    decoded_word=$(echo "${decoded_word}" | sed "s|${octal:1}|${char_map[${octal}]}|g")    
+    decoded_word=$(echo "${decoded_word}" | sed "s|\\${octal}|${char_map[${octal}]}|g")    
   done
 
   echo "${decoded_word}"

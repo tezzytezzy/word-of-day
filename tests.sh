@@ -4,8 +4,8 @@
 set -eo pipefail
 
 filename=./word_of_the_day.sh
-_non_existent_file=abc123.txt
-_zero_size_file=./zero.txt
+_non_existent_file='abc123.txt'
+_zero_size_file='./zero.txt'
 
 # . ${filename} is equivalent
 # SC1090: ShellCheck can't follow non-constant source. Use a directive to specify location.
@@ -36,13 +36,13 @@ export word_list_filename=./german_words.txt
 if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") == +([[:digit:]]) ]]; then exit 10; fi
 
 
-export selected_word=Heiz\326lr\334cksto\337abd\304mpfung # Heizölrückstoßabdämpfung
+selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpfung
 if [[ $(decode_german_letter "${selected_word}") != "Heiz%D6lr%DCcksto%DFabd%C4mpfung" ]]; then exit 11; fi
 
-export selected_word=Gr\334nfl\334gelb\334lb\334l # Grünflügelbülbül
+selected_word='Gr\334nfl\334gelb\334lb\334l' # Grünflügelbülbül
 if [[ $(decode_german_letter "${selected_word}") != "Gr%DCnfl%DCgelb%DClb%DCl" ]]; then exit 12; fi
 
-export selected_word=Übermäßig
+selected_word='Übermäßig'
 if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then exit 13; fi
 
 
@@ -52,11 +52,11 @@ if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_
 export use_german=0
 browser="${FIREFOX_BROWSER}"
 
-launch_browser panopticon "${FIREFOX_BROWSER}"
-if [[ $(ps -e | grep "${FIREFOX_BROWSER}" | wc -l) == 0 ]]; then exit 15; fi
+launch_browser panopticon "${browser}"
+if [[ $(pgrep -c "${browser}") == 0 ]]; then exit 15; fi
 
 sleep 5
-pkill -f "${FIREFOX_BROWSER}"
+pkill -f "${browser}"
 sleep 3
 
 
@@ -68,6 +68,6 @@ sleep 10
 # "chrome" - The middle word of "google-chrome-stable": Bash only string operation
 chrome_process_name="${CHROME_BROWSER:7:6}"
 
-if [[ $(ps -e | grep "${chrome_process_name}" | wc -l) == 0 ]]; then exit 16; fi
+if [[ $(pgrep -c "${chrome_process_name}") == 0 ]]; then exit 16; fi
 
 pkill --oldest "${chrome_process_name}"
