@@ -109,4 +109,4 @@ after_success:
   rm -rf kcov-master &&
   mkdir -p coverage &&
   kcov coverage ./tests.sh &&
-  bash <(curl -s https://codecov.io/bash) -v # -cF bash
+  bash <(curl -s https://codecov.io/bash) -v
