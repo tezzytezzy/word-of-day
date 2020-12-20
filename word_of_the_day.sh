@@ -63,7 +63,7 @@ search_word_in_the_file() {
   fi
 
   # The arithmetic expansion can be performed using the double parentheses ((...)) and $((...)) 
-  line_num_of_next_word=$((${line_num_of_last_word_used}+1))
+  line_num_of_next_word=$((line_num_of_last_word_used+1))
   
   if [[ "${line_num_of_next_word}" -gt "${total_line_num}" ]]; then
     line_num_of_next_word="${line_num_when_error}"
