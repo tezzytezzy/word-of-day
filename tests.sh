@@ -29,11 +29,14 @@ if [[ $(check_inputs --file "${_non_existent_file}" --chrome) != $(show_no_filen
 if [[ $(touch "${_zero_size_file}"; check_inputs --file "${_zero_size_file}" --firefox) != $(show_empty_file_msg) ]]; then exit 8; fi
 rm ${_zero_size_file}
 
+###
+# the following two tests make sure the first line has a number
 export word_list_filename=./english_words.txt
-if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") == +([[:digit:]]) ]]; then exit 9; fi
+if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 9; fi
 
 export word_list_filename=./german_words.txt
-if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") == +([[:digit:]]) ]]; then exit 10; fi
+if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10; fi
+###
 
 
 selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpfung
