@@ -33,6 +33,7 @@ search_word_in_the_file() {
   
   local total_line_num
   local line_num_of_last_word_used
+  local line_num_of_next_word
   local before_carriage_return_removed
 
   # "$1" = first field (column) reference
@@ -62,7 +63,7 @@ search_word_in_the_file() {
   fi
 
   # The arithmetic expansion can be performed using the double parentheses ((...)) and $((...)) 
-  local line_num_of_next_word=$(("${line_num_of_last_word_used}"+1))
+  line_num_of_next_word=$((${line_num_of_last_word_used}+1))
   
   if [[ "${line_num_of_next_word}" -gt "${total_line_num}" ]]; then
     line_num_of_next_word="${line_num_when_error}"
