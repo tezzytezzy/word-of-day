@@ -2,13 +2,19 @@ language: shell
 os: linux
 dist: xenial
 
-script:
-  # nullglob: If set, Bash allows filename patterns which match no files to expand to a null string, rather than themselves.
-  # globstar: If set, the pattern ‘**’ used in a filename expansion context will match all files and 
-  #           zero or more directories and subdirectories. If the pattern is followed by a ‘/’, only directories and subdirectories match.
-  # https://www.shellcheck.net/ to lint *sh scripts. `-x` allows Shellcheck to follow sourced files
-  - bash -c 'shopt -s globstar nullglob; shellcheck -x **/*.{sh,ksh,bash}'
+# before_install:
+#   ### 
+#   # http://ubuntuhandbook.org/index.php/2020/04/google-chrome-ubuntu-20-04-official-repository/
+#   # 
+#   # Install the key
+#   - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 
+#   # Add the repository to the system
+#   - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
+#       >> /etc/apt/sources.list.d/google-chrome.list'
+#   - sudo apt-get update
+  
+script:
   ###
   # Permission error on script
   # Travis would spit out the below three lines.
@@ -38,30 +44,26 @@ script:
   #  mode change 100644 => 100755 tests.sh
   - chmod +x ./tests.sh
 
-  ### 
-  # http://ubuntuhandbook.org/index.php/2020/04/google-chrome-ubuntu-20-04-official-repository/
-  # 
-  # Install the key
-  - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-
-  # Add the repository to the system
-  - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
-      >> /etc/apt/sources.list.d/google-chrome.list'
-
-### 
-# https://github.com/codecov/example-bash
-# Deprecated key: "sudo" (The key `sudo` has no effect anymore.)
-# sudo: required
+  # nullglob: If set, Bash allows filename patterns which match no files to expand to a null string, rather than themselves.
+  # globstar: If set, the pattern ‘**’ used in a filename expansion context will match all files and 
+  #           zero or more directories and subdirectories. If the pattern is followed by a ‘/’, only directories and subdirectories match.
+  # https://www.shellcheck.net/ to lint *sh scripts. `-x` allows Shellcheck to follow sourced files
+  - bash -c 'shopt -s globstar nullglob; shellcheck -x **/*.{sh,ksh,bash}'
 
 addons:
+  chrome: stable
+
+  ### 
+  # https://github.com/codecov/example-bash
+  # Deprecated key: "sudo" (The key `sudo` has no effect anymore.)
+  # sudo: required
   apt:
     packages:
       - libcurl4-openssl-dev
       - libelf-dev
       - libdw-dev
       - cmake
-      - firefox
-      - google-chrome-stable
+      # - firefox # Not needed as already installed
 
 # jobs:
 #   # Can omit the below line as it is named "Test" by default with the first letter capitalised
