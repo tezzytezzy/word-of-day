@@ -1,36 +1,73 @@
 #!/usr/bin/env bash
-
+#
+# Unit testing script
 set -eo pipefail
 
 filename=./word_of_the_day.sh
+_non_existent_file='abc123.txt'
+_zero_size_file='./zero.txt'
 
 # . ${filename} is equivalent
 # SC1090: ShellCheck can't follow non-constant source. Use a directive to specify location.
 # shellcheck disable=SC1090
 source ${filename} 
 
-# Output should be help menu for all
-if [[ "${filename}" != show_help_menu ]]; then exit 2; fi
+if [[ $(check_inputs) != $(show_help_msg) ]]; then exit 2; fi
 
-if [[ "$("${filename}" --help)" != show_help_menu ]]; then exit 3; fi
+if [[ $(check_inputs --help) != $(show_help_msg) ]]; then exit 3; fi
 
-if [[ "$("${filename}" -h)" != show_help_menu ]]; then exit 4; fi
+if [[ $(check_inputs -h) != $(show_help_msg) ]]; then exit 4; fi
 
-if [[ "$("${filename}" abc)" != show_help_menu ]]; then exit 5; fi
+if [[ $(check_inputs "${_non_existent_file}") != $(show_help_msg) ]]; then exit 5; fi
 
-if [[ "$("${filename}" -f ./abc)" != show_help_menu ]]; then exit 6; fi
 
-if [[ "$("${filename}" --file ./abc)" != show_help_menu ]]; then exit 7; fi
+if [[ $(check_inputs -f "${_non_existent_file}" --firefox) != $(show_no_filename_msg) ]]; then exit 6; fi
 
-# # Output should be help menu for all
-# if [[ "$(./word_of_the_day_english.sh)" != show_help_menu ]]; then exit 2; fi
+if [[ $(check_inputs --file "${_non_existent_file}" --chrome) != $(show_no_filename_msg) ]]; then exit 7; fi
 
-# if [[ "$(./word_of_the_day_english.sh --help)" != show_help_menu ]]; then exit 3; fi
 
-# if [[ "$(./word_of_the_day_english.sh -h)" != show_help_menu ]]; then exit 4; fi
+if [[ $(touch "${_zero_size_file}"; check_inputs --file "${_zero_size_file}" --firefox) != $(show_empty_file_msg) ]]; then exit 8; fi
+rm ${_zero_size_file}
 
-# if [[ "$(./word_of_the_day_english.sh abc)" != show_help_menu ]]; then exit 5; fi
+export word_list_filename=./english_words.txt
+if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") == +([[:digit:]]) ]]; then exit 9; fi
 
-# if [[ "$(./word_of_the_day_english.sh -f ./abc)" != show_help_menu ]]; then exit 6; fi
+export word_list_filename=./german_words.txt
+if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") == +([[:digit:]]) ]]; then exit 10; fi
 
-# if [[ "$(./word_of_the_day_english.sh --file ./abc)" != show_help_menu ]]; then exit 7; fi
+
+selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpfung
+if [[ $(decode_german_letter "${selected_word}") != "Heiz%D6lr%DCcksto%DFabd%C4mpfung" ]]; then exit 11; fi
+
+selected_word='Gr\334nfl\334gelb\334lb\334l' # Grünflügelbülbül
+if [[ $(decode_german_letter "${selected_word}") != "Gr%DCnfl%DCgelb%DClb%DCl" ]]; then exit 12; fi
+
+selected_word='Übermäßig'
+if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then exit 13; fi
+
+
+if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_msg) ]]; then exit 14; fi
+
+
+export use_german=0
+browser="${FIREFOX_BROWSER}"
+
+launch_browser panopticon "${browser}"
+if [[ $(pgrep -c "${browser}") == 0 ]]; then exit 15; fi
+
+sleep 5
+pkill -f "${browser}"
+sleep 3
+
+
+export use_german=0
+launch_browser gemütlichkeit "${CHROME_BROWSER}"
+
+sleep 10
+
+# "chrome" - The middle word of "google-chrome-stable": Bash only string operation
+chrome_process_name="${CHROME_BROWSER:7:6}"
+
+if [[ $(pgrep -c "${chrome_process_name}") == 0 ]]; then exit 16; fi
+
+pkill --oldest "${chrome_process_name}"

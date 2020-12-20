@@ -2,66 +2,73 @@ language: shell
 os: linux
 dist: xenial
 
+# before_install:
+#   ### 
+#   # http://ubuntuhandbook.org/index.php/2020/04/google-chrome-ubuntu-20-04-official-repository/
+#   # 
+#   # Install the key
+#   - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+
+#   # Add the repository to the system
+#   - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
+#       >> /etc/apt/sources.list.d/google-chrome.list'
+#   - sudo apt-get update
+  
 script:
+  ###
+  # Permission error on script
+  # Travis would spit out the below three lines.
+  # $ ./tests.sh
+  # /home/travis/.travis/functions: line 109: ./tests.sh: Permission denied
+  # The command "./tests.sh" exited with 126.
+  # 
+  # The following fix does NOT seem to work
+  # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
+  # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
+  # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
+  # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
+  # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
+  # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
+  # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
+  # (base) to@mx:~/gits/word-of-day$ git update-index --chmod=+x tests.sh
+  # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
+  # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
+  # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
+  # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
+  # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
+  # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
+  # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
+  # (base) to@mx:~/gits/word-of-day$ git commit -m "permission access for test.sh"
+  # [main 667d69c] permission access for test.sh
+  #  1 file changed, 0 insertions(+), 0 deletions(-)
+  #  mode change 100644 => 100755 tests.sh
+  - chmod +x ./tests.sh
+
   # nullglob: If set, Bash allows filename patterns which match no files to expand to a null string, rather than themselves.
   # globstar: If set, the pattern ‘**’ used in a filename expansion context will match all files and 
   #           zero or more directories and subdirectories. If the pattern is followed by a ‘/’, only directories and subdirectories match.
   # https://www.shellcheck.net/ to lint *sh scripts. `-x` allows Shellcheck to follow sourced files
   - bash -c 'shopt -s globstar nullglob; shellcheck -x **/*.{sh,ksh,bash}'
 
-# bach.sh
-# shellspec
-# shunit2
-# bats
-# 
-
-
-
-### https://github.com/codecov/example-bash
-
-# Deprecated key: "sudo" (The key `sudo` has no effect anymore.)
-# sudo: required
-
 addons:
+  chrome: stable
+
+  ### 
+  # https://github.com/codecov/example-bash
+  # Deprecated key: "sudo" (The key `sudo` has no effect anymore.)
+  # sudo: required
   apt:
     packages:
       - libcurl4-openssl-dev
       - libelf-dev
       - libdw-dev
       - cmake
+      # - firefox # Not needed as already installed
 
 # jobs:
 #   # Can omit the below line as it is named "Test" by default with the first letter capitalised
 #   stage: Test
 #   name: "Unit testing"
-
-#   ###
-#   # Permission error on script
-#   # Travis would spit out the below three lines.
-#   # $ ./tests.sh
-#   # /home/travis/.travis/functions: line 109: ./tests.sh: Permission denied
-#   # The command "./tests.sh" exited with 126.
-#   # <FIX>
-#   # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
-#   # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
-#   # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
-#   # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
-#   # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
-#   # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
-#   # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
-#   # (base) to@mx:~/gits/word-of-day$ git update-index --chmod=+x tests.sh
-#   # (base) to@mx:~/gits/word-of-day$ git ls-tree HEAD
-#   # 100644 blob 6319bec2a938dd8889713e671c41bdb6b551de26	.travis.yml
-#   # 100644 blob 51b18666e62d92c2635ad88dfb378b57be280ccf	README.md
-#   # 100644 blob db00954d8629e6d7a6776b076b13a0287dbb4c16	english_words.txt
-#   # 100644 blob 162e14b0b2db8d4a1bb582cfd8e686834337b106	german_words.txt
-#   # 100644 blob a20398084fbfce22eccd374152868637bcf308c4	tests.sh
-#   # 100755 blob b5dd165d2d299b6827e37133934387208f0e9742	word_of_the_day.sh
-#   # (base) to@mx:~/gits/word-of-day$ git commit -m "permission access for test.sh"
-#   # [main 667d69c] permission access for test.sh
-#   #  1 file changed, 0 insertions(+), 0 deletions(-)
-#   #  mode change 100644 => 100755 tests.sh
-#   script: chmod +x ./tests.sh
 
 deploy:
   provider: pages # Push to GitHub
@@ -104,7 +111,4 @@ after_success:
   rm -rf kcov-master &&
   mkdir -p coverage &&
   kcov coverage ./tests.sh &&
-  bash <(curl -s https://codecov.io/bash) -v # -cF bash
-
-  # - coverage run main.py
-  # - coverage report
+  bash <(curl -s https://codecov.io/bash) -v
