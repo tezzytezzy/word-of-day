@@ -59,7 +59,7 @@ browser="${FIREFOX_BROWSER}"
 echo "${browser}"
 launch_browser panopticon "${browser}"
 sleep 5
-echo "$(pgrep firefox)"
+pgrep "${browser}"
 if [[ $(pgrep -c "${browser}") == 0 ]]; then exit 15; fi
 
 sleep 5
@@ -75,7 +75,7 @@ sleep 10
 # "chrome" - The middle word of "google-chrome-stable": Bash only string operation
 chrome_process_name="${CHROME_BROWSER:7:6}"
 echo "${chrome_process_name}"
-echo "$(pgrep chrome)"
+pgrep chrome
 if [[ $(pgrep -c "${chrome_process_name}") == 0 ]]; then exit 16; fi
 
 pkill --oldest "${chrome_process_name}"
