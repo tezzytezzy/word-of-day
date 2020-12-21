@@ -41,19 +41,19 @@ if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10
 ###
 
 
-selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpfung
-if [[ $(decode_german_letter "${selected_word}") != "Heiz%D6lr%DCcksto%DFabd%C4mpfung" ]]; then exit 11; fi
+# selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpfung
+# if [[ $(decode_german_letter "${selected_word}") != "Heiz%D6lr%DCcksto%DFabd%C4mpfung" ]]; then exit 11; fi
 
-selected_word='Gr\334nfl\334gelb\334lb\334l' # Grünflügelbülbül
-if [[ $(decode_german_letter "${selected_word}") != "Gr%DCnfl%DCgelb%DClb%DCl" ]]; then exit 12; fi
+# selected_word='Gr\334nfl\334gelb\334lb\334l' # Grünflügelbülbül
+# if [[ $(decode_german_letter "${selected_word}") != "Gr%DCnfl%DCgelb%DClb%DCl" ]]; then exit 12; fi
 
-selected_word='Übermäßig'
-if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then exit 13; fi
+# selected_word='Übermäßig'
+# if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then exit 13; fi
 
-
+echo 'dummy words'
 if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_msg) ]]; then exit 14; fi
 
-
+echo 'try english'
 export use_german=0
 browser="${FIREFOX_BROWSER}"
 
@@ -64,7 +64,7 @@ sleep 5
 pkill -f "${browser}"
 sleep 3
 
-
+echo 'try german'
 export use_german=0
 launch_browser gemütlichkeit "${CHROME_BROWSER}"
 
