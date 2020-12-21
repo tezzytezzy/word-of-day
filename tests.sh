@@ -40,7 +40,7 @@ search_word_in_the_file
 if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10; fi
 ###
 
-
+# Use ', not ", for literal string!
 selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpfung
 if [[ $(decode_german_letter "${selected_word}") != 'Heiz%D6lr%DCcksto%DFabd%C4mpfung' ]]; then exit 11; fi
 
@@ -53,27 +53,18 @@ if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then 
 
 if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_msg) ]]; then exit 14; fi
 
-echo before_launch_browser
-
-export use_german=0
-browser="${FIREFOX_BROWSER}"
-command -v "${browser}"
 echo test0
+browser="${FIREFOX_BROWSER}"
 launch_browser panopticon "${browser}"
 # sleep 5
 # if [[ $(pgrep -c "${browser}") == 0 ]]; then exit 15; fi
 # pkill -f "${browser}"
 # sleep 3
 echo test1
-
-sleep 10
-
-echo test2
 export use_german=0
-command -v chrome
-launch_browser gemütlichkeit chrome
+launch_browser gemütlichkeit "${CHROME_BROWSER}"
 #sleep 10
-
+echo finish
 # # "chrome" - The middle word of "google-chrome-stable": Bash only string operation
 # chrome_process_name="${CHROME_BROWSER:7:6}"
 # if [[ $(pgrep -c "${chrome_process_name}") == 0 ]]; then exit 16; fi
