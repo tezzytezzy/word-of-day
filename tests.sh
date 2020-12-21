@@ -32,10 +32,12 @@ rm ${_zero_size_file}
 ###
 # the following two tests make sure the first line has a number
 export word_list_filename=./english_words.txt
-if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 9; fi
+search_word_in_the_file
+if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 9; fi
 
 export word_list_filename=./german_words.txt
-if [[ $(search_word_in_the_file; awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10; fi
+search_word_in_the_file
+if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10; fi
 ###
 
 
