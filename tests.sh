@@ -50,14 +50,16 @@ if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10
 # selected_word='Übermäßig'
 # if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then exit 13; fi
 
-echo 'dummy words'
+
 if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_msg) ]]; then exit 14; fi
 
-echo 'try english'
+
 export use_german=0
 browser="${FIREFOX_BROWSER}"
-
+echo "${browser}"
 launch_browser panopticon "${browser}"
+sleep 5
+echo $(pgrep firefox)
 if [[ $(pgrep -c "${browser}") == 0 ]]; then exit 15; fi
 
 sleep 5
@@ -72,7 +74,8 @@ sleep 10
 
 # "chrome" - The middle word of "google-chrome-stable": Bash only string operation
 chrome_process_name="${CHROME_BROWSER:7:6}"
-
+echo "${chrome_process_name}"
+echo $(pgrep chrome)
 if [[ $(pgrep -c "${chrome_process_name}") == 0 ]]; then exit 16; fi
 
 pkill --oldest "${chrome_process_name}"
