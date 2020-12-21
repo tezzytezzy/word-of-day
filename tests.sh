@@ -42,9 +42,7 @@ if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10
 
 
 selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpfung
-decode_german_letter "${selected_word}"
-
-# if [[ $(decode_german_letter "${selected_word}") != "Heiz%D6lr%DCcksto%DFabd%C4mpfung" ]]; then exit 11; fi
+if [[ $(decode_german_letter "${selected_word}") != 'Heiz%D6lr%DCcksto%DFabd%C4mpfung' ]]; then exit 11; fi
 
 selected_word='Gr\334nfl\334gelb\334lb\334l' # Grünflügelbülbül
 decode_german_letter "${selected_word}"
@@ -65,9 +63,11 @@ launch_browser panopticon "${browser}"
 # if [[ $(pgrep -c "${browser}") == 0 ]]; then exit 15; fi
 # pkill -f "${browser}"
 # sleep 3
+echo test1
 
 sleep 10
 
+echo test2
 export use_german=0
 launch_browser gemütlichkeit "${CHROME_BROWSER}"
 #sleep 10
