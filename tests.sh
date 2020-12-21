@@ -53,6 +53,7 @@ if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then 
 
 if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_msg) ]]; then exit 14; fi
 
+echo before_launch_browser
 
 export use_german=0
 browser="${FIREFOX_BROWSER}"

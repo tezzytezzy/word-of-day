@@ -39,6 +39,7 @@ script:
   - bash -c 'shopt -s globstar nullglob; shellcheck -x **/*.{sh,ksh,bash}'
 
 addons:
+  firefox: latest
   chrome: stable
 
   ### 
@@ -51,7 +52,6 @@ addons:
       - libelf-dev
       - libdw-dev
       - cmake
-      # - firefox # Not needed as already installed
 
 # jobs:
 #   # Can omit the below line as it is named "Test" by default with the first letter capitalised
