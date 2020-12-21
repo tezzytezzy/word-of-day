@@ -45,12 +45,10 @@ selected_word='Heiz\326lr\334cksto\337abd\304mpfung' # Heizölrückstoßabdämpf
 if [[ $(decode_german_letter "${selected_word}") != 'Heiz%D6lr%DCcksto%DFabd%C4mpfung' ]]; then exit 11; fi
 
 selected_word='Gr\334nfl\334gelb\334lb\334l' # Grünflügelbülbül
-decode_german_letter "${selected_word}"
-# if [[ $(decode_german_letter "${selected_word}") != "Gr%DCnfl%DCgelb%DClb%DCl" ]]; then exit 12; fi
+if [[ $(decode_german_letter "${selected_word}") != 'Gr%DCnfl%DCgelb%DClb%DCl' ]]; then exit 12; fi
 
 selected_word='Übermäßig'
-decode_german_letter "${selected_word}"
-# if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then exit 13; fi
+if [[ $(decode_german_letter "${selected_word}") != "${selected_word}" ]]; then exit 13; fi
 
 
 if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_msg) ]]; then exit 14; fi
@@ -58,6 +56,8 @@ if [[ $(launch_browser dummy_word dummy_browser) != $(show_no_browser_installed_
 
 export use_german=0
 browser="${FIREFOX_BROWSER}"
+command -v "${browser}"
+echo test0
 launch_browser panopticon "${browser}"
 # sleep 5
 # if [[ $(pgrep -c "${browser}") == 0 ]]; then exit 15; fi
@@ -69,7 +69,8 @@ sleep 10
 
 echo test2
 export use_german=0
-launch_browser gemütlichkeit "${CHROME_BROWSER}"
+command -v chrome
+launch_browser gemütlichkeit chrome
 #sleep 10
 
 # # "chrome" - The middle word of "google-chrome-stable": Bash only string operation
