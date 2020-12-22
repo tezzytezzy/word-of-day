@@ -162,13 +162,8 @@ decode_german_letter () {
   # `decoded_word` gets assgined with "K334ste" in value although "$1" comes in as "K\334ste"!
   local decoded_word="$1"
 
-  char_map=(
-    # ä("\304"), Ä("\344"), ü("\334"), Ü("\374"), ö("\326"), Ö("\366") and ß("\337")
-    ["\304"]="%C4" ["\344"]="%E4"
-    ["\334"]="%DC" ["\374"]="%FC"
-    ["\326"]="%D6" ["\366"]="%F6"
-    ["\337"]="%DF"
-  )
+  # ä("\304"), Ä("\344"), ü("\334"), Ü("\374"), ö("\326"), Ö("\366") and ß("\337")
+  char_map=( ["\304"]="%C4" ["\344"]="%E4" ["\334"]="%DC" ["\374"]="%FC" ["\326"]="%D6" ["\366"]="%F6" ["\337"]="%DF" )
 
   for octal in "${!char_map[@]}"; do
     # decoded_word=${"$decoded_word"//"$_temp"/$"char_map[${octal}]"} gives "Bad substitution error"
@@ -193,7 +188,7 @@ decode_german_letter () {
 #   None. Launch a select browser
 #######################################
 check_inputs() {
-  if [[ "$#" -lt 3 ]]; then
+  if [[ "$#" -eq 0 ]]; then
     show_help_msg
     exit
   else
