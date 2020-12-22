@@ -74,7 +74,7 @@ launch_browser panopticon "${browser}"
 
 
 # The complete full run of the programme
-check_inputs --file "${word_list_filename}" --${browser} --german
+check_inputs --file "${word_list_filename}" --"${browser}" --german
 
 # export use_german=0
 # launch_browser gemütlichkeit "${CHROME_BROWSER}"
