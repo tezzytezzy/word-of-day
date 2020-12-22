@@ -41,56 +41,43 @@ script:
 addons:
   firefox: latest
   # Despite the below, Travis seems to be able to install
-  # [0Ktravis_fold:start:install_firefox
-  # [0K[33;1mInstalling Firefox latest[0m
   # $ export FIREFOX_SOURCE_URL='https://download.mozilla.org/?product=firefox-latest&lang=en-US&os=linux64'
-  # travis_time:start:2d094ff6
-  # [0K$ wget --no-verbose -O /tmp/firefox-latest.tar.bz2 $FIREFOX_SOURCE_URL
+  # 1.14s$ wget --no-verbose -O /tmp/firefox-latest.tar.bz2 $FIREFOX_SOURCE_URL
   # 2020-12-21 04:35:50 URL:https://download-installer.cdn.mozilla.net/pub/firefox/releases/84.0/linux-x86_64/en-US/firefox-84.0.tar.bz2 [76402088/76402088] -> "/tmp/firefox-latest.tar.bz2" [1]
-  # travis_time:end:2d094ff6:start=1608525349784117351,finish=1608525350926192821,duration=1142075470,event=prepare
-  # [0K$ export PATH=${TRAVIS_HOME}/firefox-latest/firefox:$PATH
-  # travis_fold:end:install_firefox
-  # [0K$ firefox --version
+  # $ export PATH=${TRAVIS_HOME}/firefox-latest/firefox:$PATH
+  # $ firefox --version
   # XPCOMGlueLoad error for file /home/travis/firefox-latest/firefox/libmozgtk.so:
   # libgtk-3.so.0: cannot open shared object file: No such file or directory
   # Couldn't load XPCOM.
 
   chrome: stable
-  # Cannot install Chrome properly...
-  # [0Ktravis_fold:start:install_chrome
-  # [0K$ export CHROME_SOURCE_URL=https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb
-  # [33;1mInstalling Google Chrome stable[0m
-  # travis_time:start:0e9ac7cb
-  # [0K$ wget --no-verbose -O /tmp/$(basename $CHROME_SOURCE_URL) $CHROME_SOURCE_URL
+  # $ wget --no-verbose -O /tmp/$(basename $CHROME_SOURCE_URL) $CHROME_SOURCE_URL
   # 2020-12-21 04:35:42 URL:https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb [72446160/72446160] -> "/tmp/google-chrome-stable_current_amd64.deb" [1]
-  # travis_time:end:0e9ac7cb:start=1608525342427693796,finish=1608525342883527701,duration=455833905,event=prepare
-  # [0KSelecting previously unselected package google-chrome-stable.
+  # Selecting previously unselected package google-chrome-stable.
   # (Reading database ... 106421 files and directories currently installed.)
   # Preparing to unpack .../google-chrome-stable_current_amd64.deb ...
   # Unpacking google-chrome-stable (87.0.4280.88-1) ...
   # dpkg: dependency problems prevent configuration of google-chrome-stable:
-  #  google-chrome-stable depends on fonts-liberation; however:
+  # google-chrome-stable depends on fonts-liberation; however:
   #   Package fonts-liberation is not installed.
-  #  google-chrome-stable depends on libatk-bridge2.0-0 (>= 2.5.3); however:
+  # google-chrome-stable depends on libatk-bridge2.0-0 (>= 2.5.3); however:
   #   Package libatk-bridge2.0-0 is not installed.
-  #  google-chrome-stable depends on libatspi2.0-0 (>= 2.9.90); however:
+  # google-chrome-stable depends on libatspi2.0-0 (>= 2.9.90); however:
   #   Package libatspi2.0-0 is not installed.
-  #  google-chrome-stable depends on libgbm1 (>= 8.1~0); however:
+  # google-chrome-stable depends on libgbm1 (>= 8.1~0); however:
   #   Package libgbm1 is not installed.
-  #  google-chrome-stable depends on libgtk-3-0 (>= 3.9.10); however:
+  # google-chrome-stable depends on libgtk-3-0 (>= 3.9.10); however:
   #   Package libgtk-3-0 is not installed.
-  #  google-chrome-stable depends on libxkbcommon0 (>= 0.4.1); however:
+  # google-chrome-stable depends on libxkbcommon0 (>= 0.4.1); however:
   #   Package libxkbcommon0 is not installed.
-  #  google-chrome-stable depends on xdg-utils (>= 1.0.2); however:
+  # google-chrome-stable depends on xdg-utils (>= 1.0.2); however:
   #   Package xdg-utils is not installed.
-  #
   # dpkg: error processing package google-chrome-stable (--install):
-  #  dependency problems - leaving unconfigured
+  # dependency problems - leaving unconfigured
   # Processing triggers for mime-support (3.59ubuntu1) ...
   # Processing triggers for man-db (2.7.5-1) ...
   # Errors were encountered while processing:
-  #  google-chrome-stable
-  # travis_fold:end:install_chrome
+  # google-chrome-stable
 
   ### 
   # https://github.com/codecov/example-bash
