@@ -30,13 +30,25 @@ if [[ $(check_inputs -f "${_non_existent_file}" --firefox) != $(show_no_filename
 if [[ $(check_inputs --file "${_non_existent_file}" --chrome) != $(show_no_filename_msg) ]]; then exit 8; fi
 
 
+# Make sure the search_word_in_the_file function inserts the first word line number, 2, in Line 1
+#   The english_words.txt has no line number in Line 1
 export word_list_filename=./english_words.txt
 
-if [[ $(check_inputs --file "${word_list_filename}" --german) != $(show_no_browser_msg) ]]; then exit 9; fi
-
-# Make sure the file has a word line number in Line 1
 search_word_in_the_file
+
 if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10; fi
+
+
+# Make sure the search_word_in_the_file function inserts the first word line number, 2, in Line 1
+#  The german_words.txt has the last word line number in Line 1
+export word_list_filename=./german_words.txt
+
+search_word_in_the_file
+
+if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10; fi
+
+
+if [[ $(check_inputs --file "${word_list_filename}" --german) != $(show_no_browser_msg) ]]; then exit 9; fi
 
 
 # Use ', not ", for literal string!
@@ -60,8 +72,12 @@ launch_browser panopticon "${browser}"
 # pkill -f "${browser}"
 # sleep 3
 
-export use_german=0
-launch_browser gemütlichkeit "${CHROME_BROWSER}"
+
+# The complete full run of the programme
+check_inputs --file "${word_list_filename}" --${browser} --german
+
+# export use_german=0
+# launch_browser gemütlichkeit "${CHROME_BROWSER}"
 #sleep 10
 
 # # "chrome" - The middle word of "google-chrome-stable": Bash only string operation
