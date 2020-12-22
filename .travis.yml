@@ -4,8 +4,8 @@ dist: xenial
 
 script:
   ###
-  # Permission error on script
-  # Travis would spit out the below three lines.
+  # Permission error on script. Travis would spit out the below three lines
+  #
   # $ ./tests.sh
   # /home/travis/.travis/functions: line 109: ./tests.sh: Permission denied
   # The command "./tests.sh" exited with 126.
@@ -83,7 +83,7 @@ addons:
   #   Package libxkbcommon0 is not installed.
   #  google-chrome-stable depends on xdg-utils (>= 1.0.2); however:
   #   Package xdg-utils is not installed.
-
+  #
   # dpkg: error processing package google-chrome-stable (--install):
   #  dependency problems - leaving unconfigured
   # Processing triggers for mime-support (3.59ubuntu1) ...
