@@ -114,6 +114,7 @@ deploy:
 notifications:
   # By default, a build email is sent to the committer and the author, but
   #  only if they have access to the repository the commit was pushed to
+  # This does NOT seem to be working though...
   email:
     recipients:
       - $PRIMARY_EMAIL_ADDRESS
