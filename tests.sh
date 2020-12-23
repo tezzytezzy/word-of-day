@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Unit testing script
+# TDD unit testing script
 set -eo pipefail
 
 filename=./word_of_the_day.sh
@@ -47,6 +47,17 @@ search_word_in_the_file
 
 if [[ $(awk 'FNR==1' "${word_list_filename}") != +([[:digit:]]) ]]; then exit 10; fi
 
+# Just show the following interesting experiments
+# (base) to@mx:~/Desktop/word_of_day/TDD$ awk 'FNR==1' english_words.txt 
+# 3
+# (base) to@mx:~/Desktop/word_of_day/TDD$ if [[ $(awk 'FNR==1' english_words.txt) == 3 ]]; then echo YES; fi
+# YES
+# (base) to@mx:~/Desktop/word_of_day/TDD$ if [[ $(echo hello; awk 'FNR==1' english_words.txt) == 3 ]]; then echo YES; fi
+# (base) to@mx:~/Desktop/word_of_day/TDD$ if [[ $(awk 'FNR==1' english_words.txt) -eq 3 ]]; then echo YES; fi
+# YES
+# (base) to@mx:~/Desktop/word_of_day/TDD$ if [[ $(echo hello; awk 'FNR==1' english_words.txt) -eq 3 ]]; then echo YES; fi
+# bash: [[: hello
+# 3: syntax error in expression (error token is "3")
 
 if [[ $(check_inputs --file "${word_list_filename}" --german) != $(show_no_browser_msg) ]]; then exit 9; fi
 
