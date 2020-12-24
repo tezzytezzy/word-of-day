@@ -95,21 +95,32 @@ addons:
 #   stage: Test
 #   name: "Unit testing"
 
+before_deploy:
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+
 deploy:
-  provider: pages # Push to GitHub
-  keep_history: true
-  
-  # Deprecated key: "skip_cleanup" (not supported in dpl v2, use cleanup)
-  # skip_cleanup: true 
-  
-  # 'false' makes Travis CI delete all the files created during the build,
-  #   which will probably delete what I am going to upload!
-  github_token: $GITHUB_TOKEN
-  # Go to Settings | Developer Settings | Personal Access Tokens on GitHub. Copy that and plug that as 'GITHUB_TOKEN' in 
-  #  Settings | Environment Variables on Travis-ci.com
+  provider: releases
+  token: $GITHUB_TOKEN
+  file: {./*.sh,./*.txt}
+  edge: true # opt in to dpl v2
   on:
-    branch: main
-  # Or,  target_branch: master?
+    tags: true 
+
+  # provider: pages # Push to GitHub
+  # keep_history: true
+  
+  # # Deprecated key: "skip_cleanup" (not supported in dpl v2, use cleanup)
+  # # skip_cleanup: true 
+  
+  # # 'false' makes Travis CI delete all the files created during the build,
+  # #   which will probably delete what I am going to upload!
+  # github_token: $GITHUB_TOKEN
+  # # Go to Settings | Developer Settings | Personal Access Tokens on GitHub. Copy that and plug that as 'GITHUB_TOKEN' in 
+  # #  Settings | Environment Variables on Travis-ci.com
+  # on:
+  #   branch: main
+  # # Or,  target_branch: master?
 
 notifications:
   # By default, a build email is sent to the committer and the author, but

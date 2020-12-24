@@ -271,6 +271,11 @@ launch_browser() {
   fi
 }
 
+# Good practice:
+#   - Write 'main' function as entry point when >1 function are defined in a script 
+#   - There is no lines of code outside of function in a script
+#     (Easier and meaningful for unit testing)
+# The below code does not serve a purpose as every line of code is in function
 # https://nenadsprojects.wordpress.com/2012/12/27/bash_source/ 
 #
 #                   Sourced     Not-Sourced
